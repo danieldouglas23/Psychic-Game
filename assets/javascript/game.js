@@ -24,27 +24,31 @@ console.log(computerLetter);
 // This function is run whenever the user presses a key.
 document.onkeyup = function (event) {
 
-    // If user runs out of guesses, stop the function.
-    if (left === 0) {
-        return;
-    }
-    
+
     // Determines which key was pressed.
     var userGuess = event.key.toLowerCase();
     userGuessArray.push(userGuess);
+
     
-    var drinkDiv = document.createElement("div");
     if (userGuess === computerLetter) {
         wins++;
         left = 9;
         alert("You guessed the computer's letter " + userGuess + ". You're a psychic!!");
         computerLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+        userGuessArray = [];
         console.log(computerLetter);
-    } else  {
-        losses++;
+    } else {
         left--;
-    }  
-    
+    }
+
+    // If user runs out of guesses, stop the function.
+    if (left === 0) {
+        left = 9;
+        losses++;
+        alert("You failed to guess the computer's letter! Start over!")
+        userGuessArray = [];
+    }
+
     winsText.textContent = "Wins: " + wins;
     lossesText.textContent = "Losses: " + losses;
     leftText.textContent = "Guesses Left: " + left;
